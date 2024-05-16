@@ -34,7 +34,7 @@ def demo(args):
     if uploaded_file is not None:
         # Read uploaded image
         orig_img = bg_image
-        st.image(orig_img, caption="Uploaded Image", use_column_width=True)
+        # st.image(orig_img, caption="Uploaded Image", use_column_width=True)
 
         # Initialize mask canvas
         mask_canvas = st_canvas(
@@ -49,7 +49,7 @@ def demo(args):
 
         if mask_canvas.image_data is not None:
             mask_img = Image.fromarray(mask_canvas.image_data.astype("uint8"))
-            # st.image(mask_img, caption="Mask", use_column_width=True)
+            st.image(mask_img, caption="Mask", use_column_width=True)
 
             if st.button("Save Mask"):
                 # Convert PIL image to grayscale
