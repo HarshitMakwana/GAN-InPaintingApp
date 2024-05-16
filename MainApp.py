@@ -25,7 +25,7 @@ def demo(args):
     if uploaded_file is not None:
         # Read uploaded image
         orig_img = Image.open(uploaded_file)
-        # st.image(orig_img, caption="Uploaded Image", use_column_width=True)
+        st.image(orig_img, caption="Uploaded Image", use_column_width=True)
 
         # Initialize mask canvas
         mask_canvas = st_canvas(
