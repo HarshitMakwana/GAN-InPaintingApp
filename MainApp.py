@@ -19,18 +19,27 @@ def demo(args):
     model.eval()
 
     st.title("Image Inpainting Demo")
+    drawing_mode = st.sidebar.selectbox(
+    "Drawing tool:",
+    ("freedraw", "line", "rect", "circle", "transform", "polygon", "point"),)
+    stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
+    if drawing_mode == "point":
+        point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
+    stroke_color = st.sidebar.color_picker("Stroke color hex: ")
+    bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
+    realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "png"])
 
     if uploaded_file is not None:
         # Read uploaded image
-        orig_img = Image.open(uploaded_file)
+        orig_img = bg_image
         st.image(orig_img, caption="Uploaded Image", use_column_width=True)
 
         # Initialize mask canvas
         mask_canvas = st_canvas(
             fill_color="rgba(255, 255, 255, 0.5)",  # Set initial fill color to semi-transparent white
-            stroke_width=15,
+                stroke_width=stroke_width,
             stroke_color="rgb(255, 255, 255)",
             background_image=orig_img,
             height=orig_img.height,
@@ -40,7 +49,7 @@ def demo(args):
 
         if mask_canvas.image_data is not None:
             mask_img = Image.fromarray(mask_canvas.image_data.astype("uint8"))
-            st.image(mask_img, caption="Mask", use_column_width=True)
+            # st.image(mask_img, caption="Mask", use_column_width=True)
 
             if st.button("Save Mask"):
                 # Convert PIL image to grayscale
