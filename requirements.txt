@@ -2,7 +2,7 @@ numpy==1.24.4
 opencv_python==4.9.0.80
 Pillow==10.3.0
 scipy
-skimage==0.0
+scikit-image
 streamlit==1.34.0
 streamlit_drawable_canvas==0.9.3
 torch==2.3.0+cu118
