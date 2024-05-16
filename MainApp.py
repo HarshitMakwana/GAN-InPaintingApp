@@ -28,9 +28,12 @@ def demo(args):
     stroke_color = st.sidebar.color_picker("Stroke color hex: ")
     bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
     realtime_update = st.sidebar.checkbox("Update in realtime", True)
-
+    
+    
     
     if bg_image is not None:
+        image = Image.open(bg_image)
+        width, height = image.size
         # Read uploaded image
         orig_img = bg_image
         # st.image(orig_img, caption="Uploaded Image", use_column_width=True)
@@ -41,8 +44,8 @@ def demo(args):
                 stroke_width=stroke_width,
             stroke_color="rgb(255, 255, 255)",
             background_image=orig_img,
-            height=orig_img.height,
-            width=orig_img.width,
+            height=height,
+            width=width,
             drawing_mode="freedraw"
         )
 
