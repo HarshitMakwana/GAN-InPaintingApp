@@ -29,9 +29,8 @@ def demo(args):
     bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
     realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
-    uploaded_file = st.file_uploader("Upload an image", type=["jpg", "png"])
-
-    if uploaded_file is not None:
+    
+    if bg_image is not None:
         # Read uploaded image
         orig_img = bg_image
         # st.image(orig_img, caption="Uploaded Image", use_column_width=True)
