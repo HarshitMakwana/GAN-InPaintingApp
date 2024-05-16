@@ -33,9 +33,9 @@ def demo(args):
     
     if bg_image is not None:
         image = Image.open(bg_image)
-        width, height = image.size
+        width, height = image.width, image.height
         # Read uploaded image
-        orig_img = bg_image
+        orig_img = image
         # st.image(orig_img, caption="Uploaded Image", use_column_width=True)
 
         # Initialize mask canvas
