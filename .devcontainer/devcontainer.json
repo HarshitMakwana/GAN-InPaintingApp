@@ -18,7 +18,7 @@
     }
   },
   "updateContentCommand": "[ -f packages.txt ] && sudo apt update && sudo apt upgrade -y && sudo xargs apt install -y <packages.txt; [ -f requirements.txt ] && pip3 install --user -r requirements.txt; pip3 install --user streamlit; echo '✅ Packages installed and Requirements met'",
-  "postCreateCommand": "curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - && sudo apt-get install -y nodejs && cd /mount/src/gan-inpaintingapp/streamlit_drawable_canvas/frontend && npm install && npm run build && ls /mount/src/gan-inpaintingapp/streamlit_drawable_canvas/frontend/build",
+  "postCreateCommand": "curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - && sudo apt-get install -y nodejs && cd /mount/src/gan-inpaintingapp/streamlit_drawable_canvas/frontend && npm install && npm run start",
   "postAttachCommand": {
     "server": "streamlit run /mount/src/gan-inpaintingapp/MainApp.py --server.enableCORS false --server.enableXsrfProtection false"
   },
