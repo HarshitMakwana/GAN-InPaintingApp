@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas 
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image
 import torch
 from torchvision.transforms import ToTensor
 import gannet_model as net
@@ -18,14 +18,8 @@ def demo(args):
     model.load_state_dict(torch.load(args.pre_train, map_location="cpu"))
     model.eval()
 
-    st.title("Image Inpainting Demo")
-    drawing_mode = st.sidebar.selectbox(
-    "Drawing tool:",
-    ("freedraw", "line", "rect", "circle", "transform", "polygon", "point"),)
-    stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
-    if drawing_mode == "point":
-        point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
-    stroke_color = st.sidebar.color_picker("Stroke color hex: ")
+    st.title("Inpainting Demo")
+    stroke_width = st.sidebar.slider("Stroke width: ", 1, 100, 30)
     bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
     realtime_update = st.sidebar.checkbox("Update in realtime", True)
     
@@ -46,14 +40,15 @@ def demo(args):
             background_image=orig_img,
             height=height,
             width=width,
+            update_streamlit = realtime_update,
             drawing_mode="freedraw"
         )
 
         if mask_canvas.image_data is not None:
             mask_img = Image.fromarray(mask_canvas.image_data.astype("uint8"))
-            st.image(mask_img, caption="Mask", use_column_width=True)
+            # st.image(mask_img, caption="Mask", use_column_width=True)
 
-            if st.button("Save Mask"):
+            if st.button("Predict masked region"):
                 # Convert PIL image to grayscale
                 pil_image_gray = mask_img.convert("L")
 
@@ -65,7 +60,7 @@ def demo(args):
 
                 # Convert data type to np.uint8
                 np_image = np_image.astype(np.uint8)
-                print(np_image)
+                # print(np_image)
                 mask_array = np.array(np_image)
                 mask_tensor = ToTensor()(mask_array).unsqueeze(0)
 
