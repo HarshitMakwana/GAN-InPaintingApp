@@ -2,5 +2,6 @@ numpy
 opencv_python
 Pillow
 streamlit
+streamlit-drawable-canvas
 torch==2.3.0
 torchvision==0.18.0
